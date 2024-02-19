@@ -1,0 +1,44 @@
+# JetBrains Rider files
+.idea/
+
+# Visual Studio Code files
+.vscode/
+
+# Build results
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+*.userprefs
+
+# Node modules
+node_modules/
+
+# Logs
+*.log
+
+# Runtime data
+*.pid
+*.pid.lock
+*.seed
+*.pid.lock
+
+# dotenv environment variables file
+.env
+
+# Test results
+TEST*.xml
+
+# Misc
+.DS_Store
+Thumbs.db
+
+# WebAssembly build output
+dist/
+wwwroot/_framework/
+wwwroot/_bin/
+
+# Blazor and Razor files
+*.razor
+*.g.cs
+*.runtimeconfig.json

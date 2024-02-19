@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'BlazingTrails.Web' ">
+	  <ExternalConsole>true</ExternalConsole>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Blazored.FluentValidation" Version="2.1.0" />
+		<PackageReference Include="MediatR" Version="12.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.1" PrivateAssets="all" />
+	</ItemGroup>
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="ManageTrails\AddTrailPage.razor" />
+	  <_ContentIncludedByDefault Remove="ManageTrails\_Imports.razor" />
+	  <_ContentIncludedByDefault Remove="wwwroot\trails\1.jpg" />
+	  <_ContentIncludedByDefault Remove="wwwroot\trails\2.jpg" />
+	  <_ContentIncludedByDefault Remove="wwwroot\trails\3.jpg" />
+	  <_ContentIncludedByDefault Remove="wwwroot\trails\4.jpg" />
+	  <_ContentIncludedByDefault Remove="wwwroot\trails\5.jpg" />
+	  <_ContentIncludedByDefault Remove="wwwroot\trails\6.jpg" />
+	  <_ContentIncludedByDefault Remove="wwwroot\trails\7.jpg" />
+	  <_ContentIncludedByDefault Remove="wwwroot\trails\8.jpg" />
+	  <_ContentIncludedByDefault Remove="wwwroot\trails\9.jpg" />
+	  <_ContentIncludedByDefault Remove="wwwroot\trails\trail-data.json" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\BlazingTrails.Shared\BlazingTrails.Shared.csproj" />
+	  <ProjectReference Include="..\BlazingTrails.ComponentLibrary\BlazingTrails.ComponentLibrary.csproj" />
+	</ItemGroup>
+
+</Project>
