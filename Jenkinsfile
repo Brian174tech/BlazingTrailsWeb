@@ -8,9 +8,8 @@ pipeline {
     }
 
     environment {
-        DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 'true'
-        DOTNET_CLI_TELEMETRY_OPTOUT      = 'true'
-        PROJECT_NAME                     = 'BlazingTrails.sln'
+        DOTNET_CLI_TELEMETRY_OPTOUT = 'true'
+        PROJECT_NAME              = 'BlazingTrails.sln'
     }
 
     stages {
@@ -20,28 +19,16 @@ pipeline {
             }
         }
 
-        stage('Restore') {
-            steps {
-                sh 'dotnet restore ${PROJECT_NAME}'
-            }
-        }
-
         stage('Build') {
             steps {
-                sh 'dotnet build ${PROJECT_NAME} -c Release --no-restore'
-            }
-        }
+                sh 'dotnet restore ${PROJECT_NAME}'
+                sh 'dotnet build ${PROJECT_NAME} -c Release --no-restore -v m'
 
-        stage('Test') {
-            when {
-                expression { return env.TEST_PROJECT != null }
-            }
-            steps {
-                sh "dotnet test ${TEST_PROJECT} -c Release --no-restore --logger trx"
-            }
-            post {
-                always {
-                    junit allowEmptyResults: true, testResults: '**/*.trx'
+                script {
+                    if (env.TEST_PROJECT) {
+                        sh "dotnet test ${env.TEST_PROJECT} -c Release --no-restore --logger trx"
+                        junit allowEmptyResults: true, testResults: '**/*.trx'
+                    }
                 }
             }
         }
@@ -49,25 +36,22 @@ pipeline {
         stage('Publish') {
             steps {
                 sh 'dotnet publish BlazingTrails.Api/BlazingTrails.Api.csproj -c Release --no-restore -o publish-output'
-            }
-        }
-
-        stage('Archive') {
-            steps {
                 archiveArtifacts artifacts: 'publish-output/**', allowEmptyArchive: true
             }
         }
     }
 
     post {
-        success {
-            echo 'Build geslaagd!'
-        }
-        failure {
-            echo 'Build is mislukt.'
-        }
+        // Geen cleanWs(): bin/ en obj/ blijven zodat de volgende build
+        // incrementeel en daardoor een stuk sneller is.
         always {
-            cleanWs()
+            script {
+                if (isWindows()) {
+                    bat "call @echo off & rd /s /q publish-output"
+                } else {
+                    sh 'rm -rf publish-output'
+                }
+            }
         }
     }
 }
